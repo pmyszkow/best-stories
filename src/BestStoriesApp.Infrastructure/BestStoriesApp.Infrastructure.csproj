@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BestStoriesApp.Core\BestStoriesApp.Core.csproj" />
+  </ItemGroup>
+
 </Project>
