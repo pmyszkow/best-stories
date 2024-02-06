@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BestStoriesApp.Core.Domain.ValueObjects;
 using BestStoriesApp.Core.Port.IItemFinder;
 
-namespace BestStoriesApp.Infrastructure.HackerNewsHttpStoryQueryAdapter
+namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
     public class ItemFinderAdapter : IItemFinder
     {
