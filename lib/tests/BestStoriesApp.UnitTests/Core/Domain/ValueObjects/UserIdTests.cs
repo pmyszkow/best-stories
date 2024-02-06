@@ -7,44 +7,55 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
     public class UserIdTests
     {
         [Test]
-        public void FromIntCreatesInstanceContainingValueFromArgument()
+        public void FromStringCreatesInstanceContainingValueFromArgument()
         {
-            const int userIdValue = 1;
+            const string userIdValue = "UserId";
 
-            var userId = UserId.FromInt(userIdValue);
+            var userId = UserId.FromString(userIdValue);
 
             Assert.AreEqual(userIdValue, userId.Value);
         }
 
         [Test]
-        public void FromIntThrowsExceptionIfArgumentLowerThanOrEqualToZero()
+        public void FromStringCreatesInstanceContainingValueParsedFromTrimmedArgument()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => UserId.FromInt(0));
-            Assert.Throws<ArgumentOutOfRangeException>(() => UserId.FromInt(-1));
+            const string userIdValue = "   UserId   ";
+
+            var userId = UserId.FromString(userIdValue);
+
+            Assert.AreEqual(userIdValue.Trim(), userId.Value);
+        }
+        
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void FromStringReturnsNullInstanceIfArgumentIsNullOrWhiteSpace(string argument)
+        {
+            Assert.AreEqual(UserId.NULL, UserId.FromString(argument));
         }
 
         [Test]
         public void FactoryPropertiesReturnsInstanceContainingValueCorrespondingToPropertyName()
         {
-            Assert.AreEqual(-1, UserId.DETACHED.Value);
+            Assert.AreEqual(null, UserId.NULL.Value);
         }
 
         [Test]
         public void ToStringReturnsContainedValueString()
         {
-            const int userIdValue = 1;
+            const string userIdValue = "UserId";
 
-            var userId = UserId.FromInt(userIdValue);
+            var userId = UserId.FromString(userIdValue);
 
-            Assert.AreEqual(userId.Value.ToString(), userId.ToString());
+            Assert.AreEqual(userId.Value, userId.ToString());
         }
 
         [Test]
         public void EqualityMembersReturnTrueIfContainedValuesAreEqual()
         {
-            var leftUserId = UserId.FromInt(1);
+            var leftUserId = UserId.FromString("UserId");
 
-            var rightUserId = UserId.FromInt(1);
+            var rightUserId = UserId.FromString("UserId");
 
             Assert.IsTrue(leftUserId == rightUserId);
 
@@ -63,9 +74,9 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void NotEqualityMembersReturnTrueIfContainedValuesAreNotEqual()
         {
-            var leftUserId = UserId.FromInt(1);
+            var leftUserId = UserId.FromString("LeftUserId");
 
-            var rightUserId = UserId.FromInt(2);
+            var rightUserId = UserId.FromString("RightUserId");
 
             Assert.IsTrue(leftUserId != rightUserId);
 

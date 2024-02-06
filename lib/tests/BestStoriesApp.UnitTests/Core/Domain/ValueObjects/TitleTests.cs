@@ -52,9 +52,9 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void EqualityMembersReturnTrueIfContainedValuesAreEqual()
         {
-            var leftTitle = Title.FromString("leftTitle");
+            var leftTitle = Title.FromString("Title");
 
-            var rightTitle = Title.FromString("leftTitle");
+            var rightTitle = Title.FromString("Title");
 
             Assert.IsTrue(leftTitle == rightTitle);
 

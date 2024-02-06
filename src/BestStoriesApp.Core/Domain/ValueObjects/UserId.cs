@@ -5,24 +5,24 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 {
     public class UserId : IEquatable<UserId>
     {
-        private UserId(int value)
+        private UserId(string value)
         {
             Value = value;
         }
 
-        public static UserId FromInt(int value)
+        public static UserId FromString(string value)
         {
-            if (value <= 0)
-                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(UserId)} value must be greater than zero.");
+            if (string.IsNullOrWhiteSpace(value))
+                return NULL;
 
-            return new UserId(value);
+            return new UserId(value.Trim());
         }
 
-        public int Value { get; }
+        public string Value { get; }
 
-        public static UserId DETACHED { get; } = new UserId(-1);
+        public static UserId NULL { get; } = new UserId(null);
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value;
 
         private sealed class ValueEqualityComparer : IEqualityComparer<UserId>
         {
@@ -37,7 +37,7 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
             public int GetHashCode(UserId obj)
             {
-                return obj.Value;
+                return (obj.Value != null ? obj.Value.GetHashCode() : 0);
             }
         }
 
@@ -60,7 +60,7 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public override int GetHashCode()
         {
-            return Value;
+            return (Value != null ? Value.GetHashCode() : 0);
         }
 
         public static bool operator ==(UserId left, UserId right)
