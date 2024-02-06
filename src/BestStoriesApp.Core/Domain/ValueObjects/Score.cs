@@ -12,6 +12,9 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static Score FromInt(int value)
         {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(Score)} value must not be lower than zero.");
+
             return new Score(value);
         }
 

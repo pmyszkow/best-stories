@@ -12,6 +12,9 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static ItemId FromInt(int value)
         {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ItemId)} value must be greater than zero.");
+
             return new ItemId(value);
         }
 

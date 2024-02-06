@@ -12,7 +12,10 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static Title FromString(string value)
         {
-            return new Title(value);
+            if (string.IsNullOrWhiteSpace(value))
+                return NULL;
+
+            return new Title(value.Trim());
         }
 
         public string Value { get; }

@@ -12,7 +12,14 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static ItemUri FromString(string value)
         {
-            return new ItemUri(value);
+            if (string.IsNullOrWhiteSpace(value))
+                return NULL;
+
+            var trimmedValue = value.Trim();
+
+            var uri = new Uri(trimmedValue, UriKind.Absolute);
+
+            return new ItemUri(trimmedValue);
         }
 
         public string Value { get; }

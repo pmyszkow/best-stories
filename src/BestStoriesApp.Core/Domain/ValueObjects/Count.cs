@@ -12,6 +12,9 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static Count FromInt(int value)
         {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(Count)} value must not be lower than zero.");
+
             return new Count(value);
         }
 

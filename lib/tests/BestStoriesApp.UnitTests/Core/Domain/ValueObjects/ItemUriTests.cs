@@ -23,7 +23,7 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
 
             var itemUri = ItemUri.FromString(itemUriValue);
 
-            Assert.AreEqual(itemUriValue, itemUri.Value);
+            Assert.AreEqual(itemUriValue.Trim(), itemUri.Value);
         }
 
         [Test]

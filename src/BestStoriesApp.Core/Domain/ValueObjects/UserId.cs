@@ -12,6 +12,9 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 
         public static UserId FromInt(int value)
         {
+            if (value <= 0)
+                throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(UserId)} value must be greater than zero.");
+
             return new UserId(value);
         }
 
