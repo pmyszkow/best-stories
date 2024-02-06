@@ -1,6 +1,6 @@
 ﻿namespace BestStoriesApp.Core.Domain.ValueObjects
 {
-    public class TimeStamp
+    public class UnixTimeStamp
     {
         
     }

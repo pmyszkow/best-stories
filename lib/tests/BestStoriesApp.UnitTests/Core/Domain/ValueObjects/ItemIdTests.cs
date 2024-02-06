@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using BestStoriesApp.Core.Domain.ValueObjects;
+using NUnit.Framework;
+using System;
 
 namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
 {
@@ -7,31 +9,76 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void FromIntCreatesInstanceContainingValueFromArgument()
         {
-            Assert.Fail();
+            const int itemIdValue = 1;
+
+            var itemId = ItemId.FromInt(itemIdValue);
+
+            Assert.AreEqual(itemIdValue, itemId.Value);
         }
 
         [Test]
-        public void FromIntThrowsExceptionIfArgumentLowerThanZero()
+        public void FromIntThrowsExceptionIfArgumentLowerThanOrEqualToZero()
         {
-            Assert.Fail();
+            Assert.Throws<ArgumentOutOfRangeException>(() => ItemId.FromInt(0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => ItemId.FromInt(-1));
+        }
+
+        [Test]
+        public void FactoryPropertiesReturnsInstanceContainingValueCorrespondingToPropertyName()
+        {
+            Assert.AreEqual(0, ItemId.ZERO.Value);
         }
 
         [Test]
         public void ToStringReturnsContainedValueString()
         {
-            Assert.Fail();
+            const int itemIdValue = 1;
+
+            var itemId = ItemId.FromInt(itemIdValue);
+
+            Assert.AreEqual(itemId.Value.ToString(), itemId.ToString());
         }
 
         [Test]
         public void EqualityMembersReturnTrueIfContainedValuesAreEqual()
         {
-            Assert.Fail();
+            var leftItemId = ItemId.FromInt(1);
+
+            var rightItemId = ItemId.FromInt(1);
+
+            Assert.IsTrue(leftItemId == rightItemId);
+
+            Assert.IsTrue(leftItemId.Equals(leftItemId));
+            Assert.IsTrue(leftItemId.Equals(rightItemId));
+
+            Assert.IsTrue(leftItemId.Equals((object)leftItemId));
+            Assert.IsTrue(leftItemId.Equals((object)rightItemId));
+
+            var comparer = ItemId.ValueComparer;
+            Assert.IsTrue(comparer.Equals(null, null));
+            Assert.IsTrue(comparer.Equals(leftItemId, leftItemId));
+            Assert.IsTrue(comparer.Equals(leftItemId, rightItemId));
         }
 
         [Test]
         public void NotEqualityMembersReturnTrueIfContainedValuesAreNotEqual()
         {
-            Assert.Fail();
+            var leftItemId = ItemId.FromInt(1);
+
+            var rightItemId = ItemId.FromInt(2);
+
+            Assert.IsTrue(leftItemId != rightItemId);
+
+            Assert.IsTrue(!leftItemId.Equals(null));
+            Assert.IsTrue(!leftItemId.Equals(rightItemId));
+
+            Assert.IsTrue(!leftItemId.Equals((object)null));
+            Assert.IsTrue(!leftItemId.Equals((object)rightItemId));
+
+            var comparer = ItemId.ValueComparer;
+            Assert.IsTrue(!comparer.Equals(null, rightItemId));
+            Assert.IsTrue(!comparer.Equals(leftItemId, null));
+            Assert.IsTrue(!comparer.Equals(leftItemId, rightItemId));
         }
     }
 }
