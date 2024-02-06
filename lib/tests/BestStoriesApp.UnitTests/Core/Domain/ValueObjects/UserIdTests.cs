@@ -26,7 +26,7 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void FactoryPropertiesReturnsInstanceContainingValueCorrespondingToPropertyName()
         {
-            Assert.AreEqual(0, UserId.ZERO.Value);
+            Assert.AreEqual(-1, UserId.DETACHED.Value);
         }
 
         [Test]

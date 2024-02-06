@@ -30,7 +30,7 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
 
             var unixTimeStamp = UnixTimeStamp.FromInt(unixTimeStampValue);
 
-            Assert.AreEqual(unixTimeStamp.Value.ToString(), count.ToString());
+            Assert.AreEqual(unixTimeStamp.Value.ToString(), unixTimeStamp.ToString());
         }
 
         [Test]

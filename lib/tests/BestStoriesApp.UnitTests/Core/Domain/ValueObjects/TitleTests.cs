@@ -52,9 +52,9 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void EqualityMembersReturnTrueIfContainedValuesAreEqual()
         {
-            var leftTitle = Title.FromInt(1);
+            var leftTitle = Title.FromString("leftTitle");
 
-            var rightTitle = Title.FromInt(1);
+            var rightTitle = Title.FromString("leftTitle");
 
             Assert.IsTrue(leftTitle == rightTitle);
 
@@ -73,9 +73,9 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         [Test]
         public void NotEqualityMembersReturnTrueIfContainedValuesAreNotEqual()
         {
-            var leftTitle = Title.FromInt(1);
+            var leftTitle = Title.FromString("leftTitle");
 
-            var rightTitle = Title.FromInt(2);
+            var rightTitle = Title.FromString("rightTitle");
 
             Assert.IsTrue(leftTitle != rightTitle);
 
