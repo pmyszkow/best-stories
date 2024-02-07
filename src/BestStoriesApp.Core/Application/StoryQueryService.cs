@@ -15,16 +15,16 @@ namespace BestStoriesApp.Core.Application
             _itemFinder = itemFinder ?? throw new ArgumentNullException(nameof(itemFinder));
         }
 
-        public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count count)
+        public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count top)
         {
-            await foreach (var item in _itemFinder.GetTopBestStoryItems(count))
+            await foreach (var itemDpo in _itemFinder.GetTopBestStoryItems(top))
             {
-                yield return StoryDpo.CreateInstance(item.Title,
-                    item.Url,
-                    item.By,
-                    UtcTimeStamp.FromUnixTimeStamp(item.Time),
-                    item.Score,
-                    item.Descendants);
+                yield return StoryDpo.CreateInstance(itemDpo.Title,
+                    itemDpo.Url,
+                    itemDpo.By,
+                    UtcTimeStamp.FromUnixTimeStamp(itemDpo.Time),
+                    itemDpo.Score,
+                    itemDpo.Descendants);
             }
         }
     }

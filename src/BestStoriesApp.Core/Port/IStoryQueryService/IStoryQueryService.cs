@@ -5,6 +5,6 @@ namespace BestStoriesApp.Core.Port.IStoryQueryService
 {
     public interface IStoryQueryService
     {
-        IAsyncEnumerable<StoryDpo> GetTopBestStories(Count count);
+        IAsyncEnumerable<StoryDpo> GetTopBestStories(Count top);
     }
 }

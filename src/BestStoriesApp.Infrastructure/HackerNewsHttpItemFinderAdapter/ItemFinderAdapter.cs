@@ -18,9 +18,9 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 
         public async IAsyncEnumerable<StoryItemDpo> GetTopBestStoryItems(Count top)
         {
-            await foreach (var item in GetBestStoryItems().OrderByDescending(item => item.Score, Score.Comparer).Take(top.Value))
+            await foreach (var itemDpo in GetBestStoryItems().OrderByDescending(item => item.Score, Score.Comparer).Take(top.Value))
             {
-                yield return item;
+                yield return itemDpo;
             }
         }
 

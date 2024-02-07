@@ -10,7 +10,7 @@ namespace BestStoriesApp.API.Controllers
 
         public string PostedBy { get; set; }
 
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
 
         public int Score { get; set; }
 
