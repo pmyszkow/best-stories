@@ -1,6 +1,5 @@
 using System;
 using System.Net.Mime;
-using System.Security.Principal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,8 +27,6 @@ namespace BestStoriesApp.API
         {
 
             services.AddControllers();
-                //.AddJsonOptions(options =>
-                //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
 
             services.AddApiVersioning().AddMvc();
 
@@ -42,7 +39,9 @@ namespace BestStoriesApp.API
             services.AddScoped<IItemFinder, ItemFinderAdapter>();
             services.AddHttpClient<HackerNewsHttpClient>(c =>
             {
-                c.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0/");
+                var httpClientOptions = Configuration.GetSection(nameof(HttpClientOptions)).Get<HttpClientOptions>();
+
+                c.BaseAddress = new Uri(httpClientOptions.BaseAddress);
                 c.DefaultRequestHeaders.Add("Accept", MediaTypeNames.Application.Json);
                 c.DefaultRequestHeaders.Add("User-Agent", "HackerNewsHttpClient");
             });
