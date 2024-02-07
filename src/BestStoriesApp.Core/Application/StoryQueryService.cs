@@ -17,16 +17,14 @@ namespace BestStoriesApp.Core.Application
 
         public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count count)
         {
-            await foreach (var itemId in _itemFinder.GetBestStoriesItemIds())
+            await foreach (var item in _itemFinder.GetTopBestStoryItems(count))
             {
-                var storyItem = await _itemFinder.GetStoryItemById(itemId);
-
-                yield return StoryDpo.CreateInstance(storyItem.Title,
-                    storyItem.Url,
-                    storyItem.By,
-                    UtcTimeStamp.FromUnixTimeStamp(storyItem.Time),
-                    storyItem.Score,
-                    storyItem.Descendants);
+                yield return StoryDpo.CreateInstance(item.Title,
+                    item.Url,
+                    item.By,
+                    UtcTimeStamp.FromUnixTimeStamp(item.Time),
+                    item.Score,
+                    item.Descendants);
             }
         }
     }

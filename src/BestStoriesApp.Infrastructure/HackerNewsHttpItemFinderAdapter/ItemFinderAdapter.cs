@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BestStoriesApp.Core.Domain.ValueObjects;
 using BestStoriesApp.Core.Port.IItemFinder;
@@ -15,7 +16,23 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async IAsyncEnumerable<ItemId> GetBestStoriesItemIds()
+        public async IAsyncEnumerable<StoryItemDpo> GetTopBestStoryItems(Count top)
+        {
+            await foreach (var item in GetBestStoryItems().OrderByDescending(item => item.Score, Score.Comparer).Take(top.Value))
+            {
+                yield return item;
+            }
+        }
+
+        public async IAsyncEnumerable<StoryItemDpo> GetBestStoryItems()
+        {
+            await foreach (var itemId in GetBestStoryItemsIds())
+            {
+                yield return await GetStoryItemById(itemId);
+            }
+        }
+
+        public async IAsyncEnumerable<ItemId> GetBestStoryItemsIds()
         {
             await foreach (var id in _httpClient.GetBestStoriesItemIds())
             {

@@ -54,7 +54,7 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
             Assert.IsTrue(leftScore.Equals((object)leftScore));
             Assert.IsTrue(leftScore.Equals((object)rightScore));
 
-            var comparer = Score.ValueComparer;
+            var comparer = Score.EqualityComparer;
             Assert.IsTrue(comparer.Equals(null, null));
             Assert.IsTrue(comparer.Equals(leftScore, leftScore));
             Assert.IsTrue(comparer.Equals(leftScore, rightScore));
@@ -75,7 +75,7 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
             Assert.IsTrue(!leftScore.Equals((object)null));
             Assert.IsTrue(!leftScore.Equals((object)rightScore));
 
-            var comparer = Score.ValueComparer;
+            var comparer = Score.EqualityComparer;
             Assert.IsTrue(!comparer.Equals(null, rightScore));
             Assert.IsTrue(!comparer.Equals(leftScore, null));
             Assert.IsTrue(!comparer.Equals(leftScore, rightScore));

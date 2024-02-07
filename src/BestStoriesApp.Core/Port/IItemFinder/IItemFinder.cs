@@ -6,7 +6,11 @@ namespace BestStoriesApp.Core.Port.IItemFinder
 {
     public interface IItemFinder
     {
-        IAsyncEnumerable<ItemId> GetBestStoriesItemIds();
+        IAsyncEnumerable<StoryItemDpo> GetTopBestStoryItems(Count top);
+
+        IAsyncEnumerable<StoryItemDpo> GetBestStoryItems();
+
+        IAsyncEnumerable<ItemId> GetBestStoryItemsIds();
 
         Task<StoryItemDpo> GetStoryItemById(ItemId id);
     }

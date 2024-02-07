@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BestStoriesApp.Core.Domain.ValueObjects
 {
-    public class Score : IEquatable<Score>
+    public class Score : IEquatable<Score>, IComparable<Score>, IComparable
     {
         private Score(int value)
         {
@@ -41,7 +41,7 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
             }
         }
 
-        public static IEqualityComparer<Score> ValueComparer { get; } = new ValueEqualityComparer();
+        public static IEqualityComparer<Score> EqualityComparer { get; } = new ValueEqualityComparer();
 
         public bool Equals(Score other)
         {
@@ -72,6 +72,53 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
         public static bool operator !=(Score left, Score right)
         {
             return !Equals(left, right);
+        }
+
+        private sealed class ValueRelationalComparer : IComparer<Score>
+        {
+            public int Compare(Score x, Score y)
+            {
+                if (ReferenceEquals(x, y)) return 0;
+                if (ReferenceEquals(null, y)) return 1;
+                if (ReferenceEquals(null, x)) return -1;
+                return x.Value.CompareTo(y.Value);
+            }
+        }
+
+        public static IComparer<Score> Comparer { get; } = new ValueRelationalComparer();
+
+        public int CompareTo(Score other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            return Value.CompareTo(other.Value);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return 1;
+            if (ReferenceEquals(this, obj)) return 0;
+            return obj is Score other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(Score)}");
+        }
+
+        public static bool operator <(Score left, Score right)
+        {
+            return Comparer<Score>.Default.Compare(left, right) < 0;
+        }
+
+        public static bool operator >(Score left, Score right)
+        {
+            return Comparer<Score>.Default.Compare(left, right) > 0;
+        }
+
+        public static bool operator <=(Score left, Score right)
+        {
+            return Comparer<Score>.Default.Compare(left, right) <= 0;
+        }
+
+        public static bool operator >=(Score left, Score right)
+        {
+            return Comparer<Score>.Default.Compare(left, right) >= 0;
         }
     }
 }
