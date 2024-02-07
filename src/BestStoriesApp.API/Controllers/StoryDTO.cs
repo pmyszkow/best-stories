@@ -2,7 +2,7 @@
 
 namespace BestStoriesApp.API.Controllers
 {
-    public class StoryDTO
+    public class StoryDto
     {
         public string Title { get; set; }
 

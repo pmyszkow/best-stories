@@ -23,11 +23,11 @@ namespace BestStoriesApp.API.Controllers
         }
 
         [HttpGet]
-        public async IAsyncEnumerable<StoryDTO> Get([FromQuery] int bestCount)
+        public async IAsyncEnumerable<StoryDto> Get([FromQuery] int bestCount)
         {
-            await foreach(var storyProjection in  _storyQueryService.GetTopBestStories(Count.FromInt(bestCount)))
+            await foreach(var storyProjection in _storyQueryService.GetTopBestStories(Count.FromInt(bestCount)))
             {
-                yield return new StoryDTO();
+                yield return new StoryDto();
             }
         }
     }

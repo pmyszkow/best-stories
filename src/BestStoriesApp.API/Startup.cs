@@ -11,6 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BestStoriesApp.Core.Application;
+using BestStoriesApp.Core.Port.IItemFinder;
+using BestStoriesApp.Core.Port.IStoryQueryService;
+using BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter;
 
 namespace BestStoriesApp.API
 {
@@ -32,6 +36,9 @@ namespace BestStoriesApp.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BestStoriesApp.API", Version = "v1" });
             });
+            services.AddScoped<IStoryQueryService, StoryQueryService>();
+            services.AddScoped<IItemFinder, ItemFinderAdapter>();
+            services.AddScoped<HttpClientStub>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
