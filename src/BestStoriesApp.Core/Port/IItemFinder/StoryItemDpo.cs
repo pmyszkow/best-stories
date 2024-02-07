@@ -62,17 +62,14 @@ namespace BestStoriesApp.Core.Port.IItemFinder
             string type,
             string url)
         {
-            if (by == null) throw new ArgumentNullException(nameof(by));
             if (descendants == null) throw new ArgumentNullException(nameof(descendants));
             if (id == null) throw new ArgumentNullException(nameof(id));
-            if (kids == null) throw new ArgumentNullException(nameof(kids));
             if (score == null) throw new ArgumentNullException(nameof(score));
             if (time == null) throw new ArgumentNullException(nameof(time));
-            if (title == null) throw new ArgumentNullException(nameof(title));
-            if (type == null) throw new ArgumentNullException(nameof(type));
-            if (url == null) throw new ArgumentNullException(nameof(url));
 
-            return new StoryItemDpo(UserId.FromString(by),
+            kids ??= Enumerable.Empty<int>();
+
+            return Create(UserId.FromString(by),
                 Count.FromInt(descendants.Value),
                 ItemId.FromInt(id.Value),
                 kids.Select(kid => ItemId.FromInt(kid))

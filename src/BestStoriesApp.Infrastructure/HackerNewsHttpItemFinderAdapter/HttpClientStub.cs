@@ -14,12 +14,14 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 
         public HttpClientStub()
         {
-            var serializeOptions = new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true,
-            };
+            //var serializeOptions = new JsonSerializerOptions()
+            //{
+            //    PropertyNameCaseInsensitive = true,
+            //};
 
-            _items = JsonSerializer.Deserialize<List<ItemDto>>(_itemsJson, serializeOptions);
+            //_items = JsonSerializer.Deserialize<List<ItemDto>>(_itemsJson, serializeOptions);
+
+            _items = JsonSerializer.Deserialize<List<ItemDto>>(_itemsJson);
         }
 
         public async IAsyncEnumerable<int> GetBestStoriesItemIds()
