@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BestStoriesApp.Core.Domain.ValueObjects;
 using BestStoriesApp.Core.Port.IItemFinder;
@@ -7,14 +8,34 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
     public class ItemFinderAdapter : IItemFinder
     {
+        private readonly HttpClientStub _httpClient;
+
+        public ItemFinderAdapter(HttpClientStub httpClient)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        }
+
         public async IAsyncEnumerable<ItemId> GetBestStoriesItemIds()
         {
-            yield return await Task.FromException<ItemId>(new System.NotImplementedException());
+            await foreach (var id in _httpClient.GetBestStoriesItemIds())
+            {
+                yield return ItemId.FromInt(id);
+            }
         }
 
         public async Task<StoryItemDpo> GetStoryItemById(ItemId id)
         {
-            return await Task.FromException<StoryItemDpo>(new System.NotImplementedException());
+            var dto = await _httpClient.GetStoryItemById(id.Value);
+
+            return StoryItemDpo.Create(dto.By,
+                dto.Descendants,
+                dto.Id,
+                dto.Kids,
+                dto.Score,
+                dto.Time,
+                dto.Title,
+                dto.Type,
+                dto.Url);
         }
     }
 }

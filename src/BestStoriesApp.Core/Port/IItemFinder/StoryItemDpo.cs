@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using BestStoriesApp.Core.Domain.ValueObjects;
@@ -54,7 +55,7 @@ namespace BestStoriesApp.Core.Port.IItemFinder
         public static StoryItemDpo Create(string by,
             int? descendants,
             int? id,
-            ReadOnlyCollection<int> kids,
+            IEnumerable<int> kids,
             int? score,
             int? time,
             string title,

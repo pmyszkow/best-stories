@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using BestStoriesApp.Core.Domain.ValueObjects;
 using BestStoriesApp.Core.Port.IItemFinder;
 using BestStoriesApp.Core.Port.IStoryQueryService;
@@ -18,7 +17,17 @@ namespace BestStoriesApp.Core.Application
 
         public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count count)
         {
-            yield return await Task.FromException<StoryDpo>(new System.NotImplementedException());
+            await foreach (var itemId in _itemFinder.GetBestStoriesItemIds())
+            {
+                var storyItem = await _itemFinder.GetStoryItemById(itemId);
+
+                yield return StoryDpo.CreateInstance(storyItem.Title,
+                    storyItem.Url,
+                    storyItem.By,
+                    UtcTimeStamp.FromUnixTimeStamp(storyItem.Time),
+                    storyItem.Score,
+                    storyItem.Descendants);
+            }
         }
     }
 }
