@@ -16,9 +16,9 @@ namespace BestStoriesApp.Core.Application
             _itemFinder = itemFinder ?? throw new ArgumentNullException(nameof(itemFinder));
         }
 
-        public async IAsyncEnumerable<StoryDPO> GetTopBestStories(Count count)
+        public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count count)
         {
-            yield return await Task.FromException<StoryDPO>(new System.NotImplementedException());
+            yield return await Task.FromException<StoryDpo>(new System.NotImplementedException());
         }
     }
 }

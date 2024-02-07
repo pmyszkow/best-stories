@@ -3,34 +3,46 @@ using System.Collections.Generic;
 
 namespace BestStoriesApp.Core.Domain.ValueObjects
 {
-    public class ItemUri : IEquatable<ItemUri>
+    public class ItemType : IEquatable<ItemType>
     {
-        private ItemUri(string value)
+        private const string STORY_VALUE = "STORY";
+        private const string COMMENT_VALUE = "COMMENT";
+
+        private ItemType(string value)
         {
             Value = value;
         }
 
-        public static ItemUri FromString(string value)
+        public static ItemType FromString(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return NULL;
-            
-            value = value.Trim();
 
-            new Uri(value, UriKind.Absolute);
-
-            return new ItemUri(value);
+            switch (value.Trim().ToUpper())
+            {
+                case STORY_VALUE:
+                    return Story;
+                case COMMENT_VALUE:
+                    return Comment;
+                default:
+                    throw new ArgumentException(nameof(value), $"{nameof(ItemType)} value must be Story,... or etc.");
+            }
         }
+
 
         public string Value { get; }
 
-        public static ItemUri NULL { get; } = new ItemUri(null);
+        public static ItemType NULL { get; } = new ItemType(null);
+
+        public static ItemType Story { get; } = new ItemType(STORY_VALUE);
+
+        public static ItemType Comment { get; } = new ItemType(COMMENT_VALUE);
 
         public override string ToString() => Value;
 
-        private sealed class ValueEqualityComparer : IEqualityComparer<ItemUri>
+        private sealed class ValueEqualityComparer : IEqualityComparer<ItemType>
         {
-            public bool Equals(ItemUri x, ItemUri y)
+            public bool Equals(ItemType x, ItemType y)
             {
                 if (ReferenceEquals(x, y)) return true;
                 if (ReferenceEquals(x, null)) return false;
@@ -39,15 +51,16 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
                 return x.Value == y.Value;
             }
 
-            public int GetHashCode(ItemUri obj)
+            public int GetHashCode(ItemType obj)
             {
                 return (obj.Value != null ? obj.Value.GetHashCode() : 0);
             }
         }
 
-        public static IEqualityComparer<ItemUri> ValueComparer { get; } = new ValueEqualityComparer();
+        public static IEqualityComparer<ItemType> ValueComparer { get; } = new ValueEqualityComparer();
 
-        public bool Equals(ItemUri other)
+
+        public bool Equals(ItemType other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -59,7 +72,7 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ItemUri)obj);
+            return Equals((ItemType)obj);
         }
 
         public override int GetHashCode()
@@ -67,12 +80,12 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
             return (Value != null ? Value.GetHashCode() : 0);
         }
 
-        public static bool operator ==(ItemUri left, ItemUri right)
+        public static bool operator ==(ItemType left, ItemType right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ItemUri left, ItemUri right)
+        public static bool operator !=(ItemType left, ItemType right)
         {
             return !Equals(left, right);
         }

@@ -8,6 +8,6 @@ namespace BestStoriesApp.Core.Port.IItemFinder
     {
         IAsyncEnumerable<ItemId> GetBestStoriesItemIds();
 
-        Task<ItemDPO> GetItemById(ItemId id);
+        Task<StoryItemDpo> GetStoryItemById(ItemId id);
     }
 }

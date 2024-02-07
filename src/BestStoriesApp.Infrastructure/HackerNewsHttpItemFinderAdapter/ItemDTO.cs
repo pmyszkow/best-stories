@@ -2,7 +2,7 @@
 
 namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
-    public class ItemDTO
+    public class ItemDto
     {
         public int? Id { get; set; }
 

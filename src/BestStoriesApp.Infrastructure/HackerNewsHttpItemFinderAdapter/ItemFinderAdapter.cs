@@ -12,9 +12,9 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
             yield return await Task.FromException<ItemId>(new System.NotImplementedException());
         }
 
-        public async Task<ItemDPO> GetItemById(ItemId id)
+        public async Task<StoryItemDpo> GetStoryItemById(ItemId id)
         {
-            return await Task.FromException<ItemDPO>(new System.NotImplementedException());
+            return await Task.FromException<StoryItemDpo>(new System.NotImplementedException());
         }
     }
 }

@@ -3,16 +3,28 @@ using BestStoriesApp.Core.Domain.ValueObjects;
 
 namespace BestStoriesApp.Core.Port.IStoryQueryService
 {
-    public class StoryDPO
+    public class StoryDpo
     {
-        public StoryDPO(Title title, ItemUri uri, UserId postedBy, UnixTimeStamp time, Score score, Count commentCount)
+        private StoryDpo(Title title, ItemUri uri, UserId postedBy, UtcTimeStamp time, Score score, Count commentCount)
         {
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-            Uri = uri ?? throw new ArgumentNullException(nameof(uri));
-            PostedBy = postedBy ?? throw new ArgumentNullException(nameof(postedBy));
-            Time = time ?? throw new ArgumentNullException(nameof(time));
-            Score = score ?? throw new ArgumentNullException(nameof(score));
-            CommentCount = commentCount ?? throw new ArgumentNullException(nameof(commentCount));
+            Title = title;
+            Uri = uri;
+            PostedBy = postedBy;
+            Time = time;
+            Score = score;
+            CommentCount = commentCount;
+        }
+
+        public static StoryDpo CreateInstance(Title title, ItemUri uri, UserId postedBy, UtcTimeStamp time, Score score, Count commentCount)
+        {
+            if (title == null) throw new ArgumentNullException(nameof(title));
+            if (uri == null) throw new ArgumentNullException(nameof(uri));
+            if (postedBy == null) throw new ArgumentNullException(nameof(postedBy));
+            if (time == null) throw new ArgumentNullException(nameof(time));
+            if (score == null) throw new ArgumentNullException(nameof(score));
+            if (commentCount == null) throw new ArgumentNullException(nameof(commentCount));
+
+            return new StoryDpo(title, uri, postedBy, time, score, commentCount);
         }
 
         public Title Title { get; }
@@ -21,7 +33,7 @@ namespace BestStoriesApp.Core.Port.IStoryQueryService
 
         public UserId PostedBy { get; }
 
-        public UnixTimeStamp Time { get; }
+        public UtcTimeStamp Time { get; }
 
         public Score Score { get; }
 

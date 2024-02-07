@@ -34,12 +34,6 @@ namespace BestStoriesApp.UnitTests.Core.Domain.ValueObjects
         }
 
         [Test]
-        public void ToUtcDateTimeStringReturnsUtcDateTimeStringCorrespondingToUnixTimestamp()
-        {
-            Assert.AreEqual($"{new DateTime(1970, 1, 1,0,0,0, DateTimeKind.Utc):yyyy-MM-ddTHH:mm:sszzz}", UnixTimeStamp.ZERO.ToUtcDateTimeString());
-        }
-
-        [Test]
         public void EqualityMembersReturnTrueIfContainedValuesAreEqual()
         {
             var leftTimeStamp = UnixTimeStamp.FromInt(1);

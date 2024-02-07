@@ -5,8 +5,6 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
 {
     public class UnixTimeStamp : IEquatable<UnixTimeStamp>
     {
-        private readonly DateTime _unixEpochDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
         private UnixTimeStamp(int value)
         {
             Value = value;
@@ -20,13 +18,6 @@ namespace BestStoriesApp.Core.Domain.ValueObjects
         public int Value { get; }
 
         public static UnixTimeStamp ZERO { get; } = new UnixTimeStamp(0);
-
-        public string ToUtcDateTimeString()
-        {
-            var utcDateTime = _unixEpochDateTime.AddSeconds(Value);
-
-            return $"{utcDateTime:yyyy-MM-ddTHH:mm:sszzz}";
-        }
 
         public override string ToString() => Value.ToString();
 
