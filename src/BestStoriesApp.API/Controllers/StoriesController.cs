@@ -2,15 +2,18 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Mime;
+using Asp.Versioning;
 using BestStoriesApp.Core.Domain.ValueObjects;
 using BestStoriesApp.Core.Port.IStoryQueryService;
+using Microsoft.AspNetCore.Http;
 
 namespace BestStoriesApp.API.Controllers
 {
+    [ApiVersion(1.0)]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [FormatFilter]
     public class StoriesController : ControllerBase
     {
         private readonly ILogger<StoriesController> _logger;
@@ -22,7 +25,10 @@ namespace BestStoriesApp.API.Controllers
             _storyQueryService = storyQueryService ?? throw new ArgumentNullException(nameof(storyQueryService));
         }
 
-        [HttpGet]
+        [HttpGet(".{format?}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async IAsyncEnumerable<StoryDto> Get([FromQuery] int top)
         {
             await foreach(var storyDpo in _storyQueryService.GetTopBestStories(Count.FromInt(top)))

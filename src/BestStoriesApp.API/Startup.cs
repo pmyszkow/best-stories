@@ -10,11 +10,13 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BestStoriesApp.Core.Application;
 using BestStoriesApp.Core.Port.IItemFinder;
 using BestStoriesApp.Core.Port.IStoryQueryService;
 using BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace BestStoriesApp.API
 {
@@ -31,11 +33,17 @@ namespace BestStoriesApp.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
+
+            services.AddApiVersioning().AddMvc();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BestStoriesApp.API", Version = "v1" });
             });
+
             services.AddScoped<IStoryQueryService, StoryQueryService>();
             services.AddScoped<IItemFinder, ItemFinderAdapter>();
             services.AddScoped<HttpClientStub>();
