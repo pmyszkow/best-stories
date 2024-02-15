@@ -9,15 +9,17 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
     public class ItemFinderAdapter : IItemFinder
     {
-        private readonly HackerNewsHttpClient _httpClient;
+        private readonly IHackerNewsHttpClient _httpClient;
 
-        public ItemFinderAdapter(HackerNewsHttpClient httpClient)
+        public ItemFinderAdapter(IHackerNewsHttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         public async IAsyncEnumerable<StoryItemDpo> GetTopBestStoryItems(Count top)
         {
+            if (top == null) throw new ArgumentNullException(nameof(top));
+
             await foreach (var itemDpo in GetBestStoryItems().OrderByDescending(item => item.Score, Score.Comparer).Take(top.Value))
             {
                 yield return itemDpo;
@@ -42,6 +44,8 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 
         public async Task<StoryItemDpo> GetStoryItemById(ItemId id)
         {
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
             var dto = await _httpClient.GetStoryItemById(id.Value);
 
             return StoryItemDpo.Create(dto.By,

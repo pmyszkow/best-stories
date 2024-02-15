@@ -37,7 +37,7 @@ namespace BestStoriesApp.API
 
             services.AddScoped<IStoryQueryService, StoryQueryService>();
             services.AddScoped<IItemFinder, ItemFinderAdapter>();
-            services.AddHttpClient<HackerNewsHttpClient>(c =>
+            services.AddHttpClient<IHackerNewsHttpClient, HackerNewsHttpClient>(c =>
             {
                 var httpClientOptions = Configuration.GetSection(nameof(HttpClientOptions)).Get<HttpClientOptions>();
 

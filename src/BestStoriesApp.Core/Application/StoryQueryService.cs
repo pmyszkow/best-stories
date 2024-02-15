@@ -17,6 +17,8 @@ namespace BestStoriesApp.Core.Application
 
         public async IAsyncEnumerable<StoryDpo> GetTopBestStories(Count top)
         {
+            if (top == null) throw new ArgumentNullException(nameof(top));
+
             await foreach (var itemDpo in _itemFinder.GetTopBestStoryItems(top))
             {
                 yield return StoryDpo.CreateInstance(itemDpo.Title,
