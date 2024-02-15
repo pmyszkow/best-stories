@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
-    public class HackerNewsHttpClient
+    public class HackerNewsHttpClient : IHackerNewsHttpClient
     {
         private readonly HttpClient _httpClient;
 

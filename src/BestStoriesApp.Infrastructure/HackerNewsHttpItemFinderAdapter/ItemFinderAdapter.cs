@@ -9,9 +9,9 @@ namespace BestStoriesApp.Infrastructure.HackerNewsHttpItemFinderAdapter
 {
     public class ItemFinderAdapter : IItemFinder
     {
-        private readonly HackerNewsHttpClient _httpClient;
+        private readonly IHackerNewsHttpClient _httpClient;
 
-        public ItemFinderAdapter(HackerNewsHttpClient httpClient)
+        public ItemFinderAdapter(IHackerNewsHttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
