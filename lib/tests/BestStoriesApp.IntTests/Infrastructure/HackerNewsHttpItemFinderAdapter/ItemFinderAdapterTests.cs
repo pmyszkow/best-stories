@@ -107,7 +107,7 @@ namespace BestStoriesApp.IntTests.Infrastructure.HackerNewsHttpItemFinderAdapter
         }
 
         [Test]
-        public async Task GetStoryItemByIdReturnsStoryItemDpoForQueriedItemId()
+        public void GetStoryItemByIdReturnsStoryItemDpoForQueriedItemId()
         {
             var itemFinder = new ItemFinderAdapter(_httpClientStub.Object);
 
@@ -124,7 +124,7 @@ namespace BestStoriesApp.IntTests.Infrastructure.HackerNewsHttpItemFinderAdapter
                 dto.Type,
                 dto.Url);
 
-            var actualDpo = await itemFinder.GetStoryItemById(itemId);
+            var actualDpo = itemFinder.GetStoryItemById(itemId).GetAwaiter().GetResult();
 
             Assert.AreEqual(expectedDpo.By, actualDpo.By);
             Assert.AreEqual(expectedDpo.Descendants, actualDpo.Descendants);
